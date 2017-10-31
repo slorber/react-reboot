@@ -4,9 +4,9 @@ The easiest way to refresh your React components.
 
 There's also possibility to run this pipeline online in the playground with simple code copy-pasting (TODO find sponsor to host)
 
-![Before](https://user-images.githubusercontent.com/749374/32229250-ab512306-be50-11e7-842c-f466668ee1bd.png)
-
-![After](https://user-images.githubusercontent.com/749374/32229268-b5095698-be50-11e7-9218-e40e429a02da.png)
+Before                     |  After
+:-------------------------:|:-------------------------:
+<img src="https://user-images.githubusercontent.com/749374/32229250-ab512306-be50-11e7-842c-f466668ee1bd.png">  |  <img src="https://user-images.githubusercontent.com/749374/32229268-b5095698-be50-11e7-9218-e40e429a02da.png" >
 
 # How it works
 
