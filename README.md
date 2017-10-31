@@ -1,8 +1,8 @@
 # react-reboot
 
-The easiest way to refresh your React components.
+The easiest way to refresh your React components with up-to-date syntax.
 
-There's also possibility to run this pipeline online in the playground with simple code copy-pasting (TODO find sponsor to host)
+There's also possibility to run this pipeline online in the playground with simple code copy-pasting (TODO find sponsor to host it)
 
 Before                     |  After
 :-------------------------:|:-------------------------:
