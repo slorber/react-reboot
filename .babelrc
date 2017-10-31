@@ -1,0 +1,24 @@
+{
+  "presets": [
+    "next/babel"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+      }
+    ],
+    [
+      "inline-import",
+      {
+        "extensions": [
+          ".css",
+          ".js"
+        ]
+      }
+    ]
+  ]
+}
