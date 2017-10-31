@@ -51,3 +51,9 @@ yarn install
 yarn dev
 ```
 
+# Sponsor
+
+<img src="https://avatars1.githubusercontent.com/u/14985020?s=200&v=4" width="50"/>
+Thanks to Zeit for sponsoring/hosting the project: it runs on NextJs and Now.
+
+Thanks to Babel, Jscodeshift, ESlint, Prettier, and [Carbon](https://github.com/dawnlabs/carbon) for some design/layout/code inspiration.
