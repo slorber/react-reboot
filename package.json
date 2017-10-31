@@ -1,8 +1,23 @@
 {
   "name": "react-reboot",
   "version": "1.0.0",
-  "description": "Node simple API to refresh your React components",
-  "main": "index.js",
+  "description": "React-reboot: refresh your react components with up-to-date syntax",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slorber/react-reboot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/slorber/react-reboot/issues"
+  },
+  "author": "Sébastien Lorber <@slorber>",
+  "homepage": "https://react-reboot.now.sh",
+  "license": "MIT",
+  "main": "src/lib/react-reboot.js",
+  "engines": {
+    "node": ">=6.9.0",
+    "npm": ">=3.10.10",
+    "yarn": ">=1.2.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "transform": "node index.js",
@@ -10,8 +25,6 @@
     "build": "next build",
     "start": "NODE_ENV=production node server.js"
   },
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "5to6-codemod": "^1.7.1",
     "babel-core": "^5",

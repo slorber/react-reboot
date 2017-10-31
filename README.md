@@ -7,8 +7,8 @@ The easiest way to refresh your React components.
 It simply runs in a row these 3 tools in a Node server, with an opiniated default configuration:
 
 - JSCodeshift
-- ESLint (--fix)
-- Prettier
+- ESLint --fix
+- Prettier --write
 
 # Problems
 
@@ -21,10 +21,23 @@ It simply runs in a row these 3 tools in a Node server, with an opiniated defaul
 
 # TODO
 
+- Tests
 - Support other parsers (Flow...)
 - Fine-tune transformation rules
 - Add CLI interface
+- Publish Node API and CLI to NPM (without embedding codemods for licensing reasons?)
 - Provide options
 - Probably other things
 - Help me :)
+
+# Dev
+
+### Run local website / playground:
+
+Install js-codemod / react-codemod in ./codemods (manual procedure for now for licensing reasons, these projects are not published on NPM)
+
+```
+yarn install
+yarn dev`
+``
 
