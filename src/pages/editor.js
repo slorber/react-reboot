@@ -7,7 +7,7 @@ import CodeMirror from 'utils/codeMirror';
 import {SpinnerOverlay} from "components/Spinner";
 
 
-import PlaygroundDefaultInlineJS from "../../fixtures/playgroundDefault.js";
+import PlaygroundDefaultInlineJS from "../fixtures/playgroundDefault.js";
 
 
 export default class Editor extends React.Component {
