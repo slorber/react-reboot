@@ -22,13 +22,16 @@ export default class Editor extends React.Component {
   componentDidMount() {
     this.updateOutput(this.state.input);
   };
+  componentWillUnmount() {
+    this.unmounted = true;
+  }
 
   updateOutput = value => {
     const transformPromise = getTransform(value);
     this.setState({transformPromise});
     transformPromise.then(
       ({output, logger}) => {
-        if (transformPromise === this.state.transformPromise) {
+        if (!this.unmounted && transformPromise === this.state.transformPromise) {
           console.debug("transform success", logger);
           this.setState({output, logger, transformPromise: undefined});
         }
@@ -37,7 +40,7 @@ export default class Editor extends React.Component {
         }
       },
       e => {
-        if (transformPromise === this.state.transformPromise) {
+        if (!this.unmounted && transformPromise === this.state.transformPromise) {
           console.error("transform error", e);
           this.setState({transformPromise: undefined});
         }
@@ -54,10 +57,10 @@ export default class Editor extends React.Component {
 
   onChangeInput = value => {
     this.setState({input: value});
-    const immediateFeedbackPromise = new Promise((resolve) => {
-      setTimeout(resolve,Editor.Throttle);
-    });
-    this.setState({transformPromise: immediateFeedbackPromise});
+    // if we are ignoring the change due to debouncing
+    // we still want a spinner to immediately appear
+    // we know for sure the promise will be replaced on debounced call
+    this.setState({transformPromise: new Promise()});
     this.updateOutputThrottled(value);
   };
 
@@ -73,13 +76,13 @@ export default class Editor extends React.Component {
         display="flex"
         flexDirection="row"
       >
-        <Window margin={20} marginRight={10}>
+        <Window marginLeft={20} marginRight={10}>
           <CodeMirrorEditor
             value={this.state.input}
             onChange={this.onChangeInput}
           />
         </Window>
-        <Window margin={20} marginLeft={10} spinner={!!this.state.transformPromise}>
+        <Window marginLeft={10} marginRight={20} spinner={!!this.state.transformPromise}>
           <CodeMirrorEditor
             value={this.state.output}
             onChange={this.onChangeOutput}
