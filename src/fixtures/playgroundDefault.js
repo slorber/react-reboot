@@ -1,20 +1,38 @@
-var React = require('React');
-var PureRenderMixin = require("react-addons-pure-render-mixin")
+var React = require('react');
+var PureRenderMixin = require("react-addons-pure-render-mixin");
 
-var someFn1 = function() {
-  var x = 3;
-  var y = 5;
-  var args = [x, y];
+var someFn = function() {
+  var args = [3, 4].concat([5,6]);
   return Math.max.apply(Math, args).map(function(n) {return n * 2;});
 };
 
-var someFn2 = function() {
-  return "string";
-};
+class SomeComponent extends React.Component {
+  constructor() {
+    super()
+    this.onClick = this.onClick.bind(this);
+  }
+  onClick() {
+    console.debug("debug");
+  }
+  render() {
+    return <div weirdProperty="str"></div>;
+  }
+}
 
-function someFn3() {
-  return someFn2() + someFn1();
-};
+var SomeDiv = React.createClass({
+  render() {
+    const {width, height, ...rest} = this.props;
+    return (
+      <div style={{width, height}} {...rest}>
+        {React.createElement(
+          SomeComponent,
+          {style: {width: 10}},
+          <span>children</span>
+        )}
+      </div>
+    )
+  },
+});
 
 var HelloWorld = React.createClass({
   mixins: [PureRenderMixin],
@@ -22,34 +40,23 @@ var HelloWorld = React.createClass({
     input: React.PropTypes.string.isRequired,
     bool: React.PropTypes.bool.isRequired
   },
-
-
   handleClick:    function(arg) {
-    alert("click " + arg)
+    console.debug("debug " + arg,React.findDOMNode(this));
   },
-
   render() {
-    var x = 2, y = 3;
+    var x = 2, y = 3, z = (!!x ? true : false);
     var {hey, ...rest} = {hey: "hello"}
     let newVar = Object.assign({hey},{x,y},rest);
-    var myString = "[" + newVar.hey + newVar.x + "]" + " ---- " + someFn3();
-
-    var z = !!x ? true : false;
+    var myString = "[" + newVar.hey + newVar.x + "]" + " ---- " + someFn();
     debugger;
     return (
       <div
         onClick={this.handleClick}
-
         onMouseDown={function(e) {
           console.debug("test");
         }.bind(this)}
       >
-        {React.createElement("div",
-          {style: {width: 10}},(
-            <span>children</span>))}
-
-        <div weirdProperty="str"></div>
-
+        {myString}
       </div>
     )
   },

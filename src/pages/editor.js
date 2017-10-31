@@ -52,8 +52,6 @@ export default class Editor extends React.Component {
   updateOutputThrottled = debounce(value => this.updateOutput(value), Editor.Throttle);
 
 
-
-
   onChangeInput = value => {
     this.setState({input: value});
     const immediateFeedbackPromise = new Promise((resolve) => {
@@ -139,6 +137,7 @@ const Window = ({children, spinner, ...rest}) => (
 );
 
 
+
 class CodeMirrorEditor extends React.PureComponent {
   static Options = {
     lineNumbers: true,
@@ -156,7 +155,6 @@ class CodeMirrorEditor extends React.PureComponent {
     this.setState({show: true});
   }
   handleChange = (editor, meta, code) => {
-    console.debug("handleChange",code);
     this.props.onChange(code);
   };
   render() {

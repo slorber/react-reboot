@@ -2,6 +2,7 @@ const fs = require("fs");
 const jscodeshiftCore = require("jscodeshift");
 const prettier = require("prettier");
 const eslint = require("eslint");
+const babel = require("babel-core");
 
 
 require('babel-register')({
@@ -12,11 +13,12 @@ require('babel-register')({
   ],
   plugins: [
     require('babel-plugin-transform-flow-strip-types'),
+    require('babel-plugin-transform-inline-consecutive-adds'),
   ]
 });
 
 
-const jscodeshift = jscodeshiftCore.withParser(require('babel-core'));
+const jscodeshift = jscodeshiftCore.withParser(require('babel-core-5'));
 
 
 const Api = {
@@ -128,6 +130,10 @@ const Transforms = [
     options: {},
   },
   {
+    transform: require("../../codemods/react-codemod/transforms/react-to-react-dom.js"),
+    options: {},
+  },
+  {
     transform: require("../../codemods/react-codemod/transforms/pure-render-mixin.js"),
     options: {"pure-component": true},
   },
@@ -146,7 +152,7 @@ const Transforms = [
 const applyTransform = (transform, options, input,logger) => {
   const output = transform(
     {
-      path: "uselesspath",
+      path: "react-reboot-string.js",
       source: input,
     },
     Api,
@@ -197,10 +203,8 @@ const applyPrettier = (input,logger) => {
 
 const applyESLint = (input,logger) => {
   try {
-    const Linter = eslint.Linter;
-    const linter = new Linter();
-
     const eslintConfig = {
+      fix: true,
       parser: "babel-eslint",
       plugins: [
         "react",
@@ -234,10 +238,6 @@ const applyESLint = (input,logger) => {
         "yield-star-spacing": 2,
         "template-curly-spacing": 2,
 
-
-
-        /*
-        https://github.com/eslint/eslint/issues/9551
         "react/no-unknown-property": 2,
         "react/self-closing-comp": 2,
 
@@ -245,22 +245,18 @@ const applyESLint = (input,logger) => {
         "react-native/split-platform-components": 2,
         "react-native/no-inline-styles": 2,
         "react-native/no-color-literals": 2,
-        */
       }
     };
 
 
-    //const CLIEngine = require("eslint").CLIEngine;
-    //const cli = new CLIEngine(eslintConfig);
 
-    const lintResult = linter.verifyAndFix(input,eslintConfig,{});
-
-    //console.log(JSON.stringify(lintResult,null,2));
-
-    const {output,fixed,messages} = lintResult;
+    const engine = new eslint.CLIEngine(eslintConfig);
+    const report = engine.executeOnText(input) ;
+    const {messages,output} = report.results[0];
+    const fixed = output !== input;
 
     if ( fixed ) {
-      logger.push("ESLint fixed the code");
+      logger.push("ESLint fixed the code!");
       messages.forEach(message => {
         logger.push(`[${message.line}][${message.ruleId}] ${message.message}`)
       });
@@ -278,6 +274,42 @@ const applyESLint = (input,logger) => {
   }
 };
 
+/*
+presets: [
+  require('babel-preset-es2015'),
+  require('babel-preset-stage-1'),
+],
+plugins: [
+  require('babel-plugin-transform-flow-strip-types'),
+  require('babel-plugin-transform-inline-consecutive-adds'),
+]
+*/
+
+const applyBabel = (input,logger) => {
+  try {
+    const result = babel.transform(input,{
+      babelrc: false,
+      presets: [
+        'es2015',
+        'stage-1',
+      ],
+      plugins: [
+        //'syntax-jsx',
+        'transform-flow-strip-types',
+        'transform-inline-consecutive-adds',
+      ]
+    });
+    //console.log("result:",JSON.stringify(result,null,2));
+    const {output,map,ast} = result;
+    //console.log(output);
+    return output ? output : input;
+  } catch (e) {
+    console.error("Babel transform failure",e);
+    logger.push("Babel transform failure: "+e.message);
+    return input;
+  }
+};
+
 
 
 const transform = (input) => {
@@ -285,6 +317,7 @@ const transform = (input) => {
   let output = input;
   output = applyTransforms(Transforms,output,logger);
   output = applyESLint(output,logger);
+  output = applyBabel(output,logger);
   output = applyPrettier(output,logger);
   return {output,logger};
 };
