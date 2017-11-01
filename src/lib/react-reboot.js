@@ -18,7 +18,7 @@ require('babel-register')({
 });
 
 
-const jscodeshift = jscodeshiftCore.withParser(require('babel-core-5'));
+const jscodeshift = jscodeshiftCore.withParser(require('babel-core'));
 
 
 const Api = {
@@ -317,7 +317,7 @@ const transform = (input) => {
   let output = input;
   output = applyTransforms(Transforms,output,logger);
   output = applyESLint(output,logger);
-  output = applyBabel(output,logger);
+  //output = applyBabel(output,logger);
   output = applyPrettier(output,logger);
   return {output,logger};
 };

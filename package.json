@@ -28,8 +28,7 @@
   "dependencies": {
     "5to6-codemod": "^1.7.1",
     "@babel/plugin-syntax-jsx": "^7.0.0-beta.4",
-    "babel-core": "^6",
-    "babel-core-5": "npm:babel-core@^5",
+    "babel-core": "^5",
     "babel-eslint": "^8.0.1",
     "babel-plugin-inline-import": "^2.0.6",
     "babel-plugin-module-resolver": "^2.7.1",
