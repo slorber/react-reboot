@@ -119,9 +119,17 @@ It simply runs in a row these 4 tools in a Node server, with an opiniated defaul
 
 # Dev
 
-### Run local website / playground:
+Works with these versions:
 
-These 2 folders should be present locally: `./codemods/js-codemod` `./codemods/react-codemod` and are not included in this repository for licensing reasons (they are not published on NPM)
+```
+  "engines": {
+    "node": ">=6.9.0",
+    "npm": ">=3.10.10",
+    "yarn": ">=1.2.1"
+  },
+```
+
+### Run local website / playground:
 
 ```
 yarn install
