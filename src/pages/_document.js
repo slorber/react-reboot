@@ -5,7 +5,7 @@ import {renderStatic} from 'glamor/server'
 import {A, Div, Footer, Header, Img} from "glamorous";
 import 'babel-polyfill';
 import 'whatwg-fetch';
-import {AppName, AppTitle, PageAbout} from "constants";
+import {AppName, AppTitle, AuthorTwitterHandle, BaseURL, GithubUrl, PageAbout, ScreenshotUrl} from "constants";
 
 export default class MyDocument extends Document {
   static async getInitialProps({renderPage}) {
@@ -26,18 +26,32 @@ export default class MyDocument extends Document {
     return (
       <html>
         <Head>
-          <meta charSet="utf-8" />
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <meta name="description" content={AppTitle}/>
-          <meta name="application-name" content={AppName} />
-          <meta name="twitter:title" content={AppName} />
-          <meta name="twitter:description" content={AppTitle}/>
-          <meta name="og:title" content={AppName} />
-          <meta name="og:description" content={AppTitle}/>
-          <meta name="og:image" content="/static/banner.png" />
+          <meta charSet="utf-8"/>
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1"/>
+          <meta name="robots" content="index, follow"/>
+          <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#"/>
+
           <title>{AppTitle}</title>
-          <link rel="shortcut icon" href="/static/favicon.ico" />
+          <meta name="application-name" content={AppName}/>
+          <meta name="twitter:title" content={AppName}/>
+          <meta name="og:title" content={AppName}/>
+          <meta property="og:site_name" content={AppName}/>
+
+          <meta name="description" content={AppTitle}/>
+          <meta name="twitter:description" content={AppTitle}/>
+          <meta name="og:description" content={AppTitle}/>
+
+          <meta property="og:url" content={BaseURL}/>
+          <link rel="canonical" href={BaseURL}/>
+
+          <meta name="thumbnail" content={ScreenshotUrl}/>
+          <meta name="og:image" content={ScreenshotUrl}/>
+          <meta name="twitter:image:src" content={ScreenshotUrl}/>
+
+          <meta name="twitter:site" content={"@" + AuthorTwitterHandle}/>
+
+          <link rel="shortcut icon" href="/static/favicon.ico"/>
           <link rel="stylesheet" href="/static/base.css"/>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/codemirror.min.css"/>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/theme/dracula.min.css"/>
@@ -55,7 +69,7 @@ export default class MyDocument extends Document {
 
 
 const ForkMe = () => (
-  <A href="https://github.com/slorber/react-reboot">
+  <A href={GithubUrl}>
     <Img
       position="absolute"
       zIndex={11}
@@ -145,7 +159,7 @@ const AppFooter = () => (
     fontSize={12}
   >
     <Div>
-      Made by <A href="https://twitter.com/sebastienlorber" color="cyan">@sebastienlorber</A>
+      Made by <A href="https://twitter.com/sebastienlorber" color="cyan">{"@" + AuthorTwitterHandle}</A>
     </Div>
   </Footer>
 );
