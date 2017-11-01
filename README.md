@@ -106,6 +106,8 @@ It simply runs in a row these 4 tools in a Node server, with an opiniated defaul
 
 # TODO
 
+- Better error handling in case of unparsable input
+- Diplay transform log in playground
 - Support other parsers (Flow...)
 - Fine-tune transformation rules and order
 - Publish Node API and CLI (without embedding codemods? licensing problem)
