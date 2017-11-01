@@ -23,7 +23,8 @@
     "transform": "node index.js",
     "dev": "node server.js",
     "build": "next build src",
-    "start": "NODE_ENV=production node server.js"
+    "start": "NODE_ENV=production node server.js",
+    "deploy": "now && now alias"
   },
   "dependencies": {
     "5to6-codemod": "^1.7.1",
@@ -52,6 +53,7 @@
     "jscodeshift": "^0.3.32",
     "lodash": "^4.17.4",
     "next": "^4.1.4",
+    "now": "^8.3.11",
     "prettier": "^1.7.4",
     "react": "^16.0.0",
     "react-codemirror": "^1.0.0",

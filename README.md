@@ -2,11 +2,89 @@
 
 The easiest way to refresh your React components with up-to-date syntax.
 
-There's also possibility to run this pipeline online in the playground with simple code copy-pasting (TODO find sponsor to host it)
+The [Playground](https://react-reboot.now.sh/) is available to transform your react components online.
 
-Before                     |  After
-:-------------------------:|:-------------------------:
-<img src="https://user-images.githubusercontent.com/749374/32229250-ab512306-be50-11e7-842c-f466668ee1bd.png">  |  <img src="https://user-images.githubusercontent.com/749374/32229268-b5095698-be50-11e7-9218-e40e429a02da.png" >
+Coming soon: Node API and CLI
+
+
+#### Before
+
+```javascript
+var React = require('react');
+var PureRenderMixin = require("react-addons-pure-render-mixin");
+
+var HelloWorld = React.createClass({
+  mixins: [PureRenderMixin],
+  propTypes: {
+    input: React.PropTypes.string.isRequired,
+    bool: React.PropTypes.bool.isRequired
+  },
+  handleClick:    function(arg) {
+    console.debug("debug " + arg,React.findDOMNode(this));
+  },
+  render() {
+    var x = 2, y = 3, z = (!!x ? true : false);
+    var {hey, ...rest} = {hey: "hello"}
+    let newVar = Object.assign({hey},{x,y},rest);
+    var myString = "[" + newVar.hey + newVar.x + "]" + " ---- " + someFn();
+    debugger;
+    return (
+      <div
+        onClick={this.handleClick}
+        onMouseDown={function(e) {
+          console.debug("test");
+        }.bind(this)}
+      >
+        {myString}
+      </div>
+    )
+  },
+});
+``` 
+
+#### After
+```javascript
+import PropTypes from "prop-types";
+import React from "react";
+import ReactDOM from "react-dom";
+
+class HelloWorld extends React.PureComponent {
+  static propTypes = {
+    input: PropTypes.string.isRequired,
+    bool: PropTypes.bool.isRequired,
+  };
+
+  handleClick = arg => {
+    console.debug(`debug ${arg}`, ReactDOM.findDOMNode(this));
+  };
+
+  render() {
+    const x = 2;
+    const y = 3;
+    const z = !!x;
+    const { hey, ...rest } = { hey: "hello" };
+    const newVar = {
+      hey,
+      x,
+      y,
+      ...rest,
+    };
+    const myString = `[${newVar.hey}${newVar.x}] ---- ${someFn()}`;
+
+    return (
+      <div
+        onClick={this.handleClick}
+        onMouseDown={e => {
+          console.debug("test");
+        }}
+      >
+        {myString}
+      </div>
+    );
+  }
+}
+``` 
+
 
 # How it works
 
@@ -30,8 +108,7 @@ It simply runs in a row these 4 tools in a Node server, with an opiniated defaul
 
 - Support other parsers (Flow...)
 - Fine-tune transformation rules
-- Add CLI interface
-- Publish Node API and CLI to NPM (without embedding codemods for licensing reasons?)
+- Publish Node API and CLI (without embedding codemods? licensing problem)
 - Provide options
 - Probably other things
 - Tests
@@ -42,8 +119,6 @@ It simply runs in a row these 4 tools in a Node server, with an opiniated defaul
 ### Run local website / playground:
 
 Install js-codemod / react-codemod in ./codemods (manual procedure for now for licensing reasons, these projects are not published on NPM)`
-
-Project only runs in yarn due to need of using 2 distinct babel versions at the same time
 
 
 ```

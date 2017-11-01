@@ -3,6 +3,9 @@
 node_modules
 .env
 .idea
-codemods
 src/.next
 yarn-error.log
+
+
+# TODO it seems adding codemods to gitignore prevent Now from deploying them
+#codemods
