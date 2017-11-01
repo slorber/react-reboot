@@ -97,20 +97,19 @@ It simply runs in a row these 4 tools in a Node server, with an opiniated defaul
 
 # Problems
 
-- Currently, no single tool solve every transform problem, and setting up and integrating multiple tools together is annoying
+- Currently, no single tool solve every transform problem, and setting up and integrating all the available tools together is time consuming.
 
-- Choosing which codemods or ESLint rules to run, in which order can take some time. This project tries apply transforms in the correct order, in a fail-safe way, and remove transforms that often crash or generate bad outputs.
+- Not all transforms available are bugfree, and figuring out which to run in which order 
 
-- It's not always easy to migrate a large codebase with many team members in one pass. Some team might prefer to migrate gradually as they are working on well-defined folders.
+- Some teams might prefer to update components gradually to avoid git conflicts. This tool focus on transforming completely files one by one, while other tools like JSCodeShift runner are focusing on running transforms one by one efficiently against a very large codebase like Facebook.
 
 
 # TODO
 
 - Support other parsers (Flow...)
-- Fine-tune transformation rules
+- Fine-tune transformation rules and order
 - Publish Node API and CLI (without embedding codemods? licensing problem)
-- Provide options
-- Probably other things
+- Provide options (api + playground)
 - Tests
 - Help me :)
 
@@ -118,8 +117,7 @@ It simply runs in a row these 4 tools in a Node server, with an opiniated defaul
 
 ### Run local website / playground:
 
-Install js-codemod / react-codemod in ./codemods (manual procedure for now for licensing reasons, these projects are not published on NPM)`
-
+These 2 folders should be present locally: `./codemods/js-codemod` `./codemods/react-codemod` and are not included in this repository for licensing reasons (they are not published on NPM)
 
 ```
 yarn install
