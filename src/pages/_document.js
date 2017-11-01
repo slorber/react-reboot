@@ -124,7 +124,7 @@ const AppHeader = () => (
         padding={5}
       >
         <Div fontSize={16}>Refresh your react components with up-to-date syntax by simple copy-paste, cli or node API.</Div>
-        <Div fontSize={12}>This runs JsCodeShift, Babel, ESLint and Prettier with an opiniated config.</Div>
+        <Div fontSize={12} marginTop={5}>This runs JsCodeShift, Babel, ESLint and Prettier with an opiniated config in a single tool.</Div>
       </Div>
     </Div>
     <Div
@@ -134,7 +134,7 @@ const AppHeader = () => (
       alignItems="center"
       justifyContent="center"
     >
-      <Link href={PageAbout}>About</Link>
+      {/*<Link href={PageAbout}>About</Link>*/}
     </Div>
   </Header>
 );
@@ -142,9 +142,11 @@ const AppHeader = () => (
 const AppFooter = () => (
   <Footer
     padding={20}
-    fontSize={20}
+    fontSize={12}
   >
-    Footer
+    <Div>
+      Made by <A href="https://twitter.com/sebastienlorber" color="cyan">@sebastienlorber</A>
+    </Div>
   </Footer>
 );
 
