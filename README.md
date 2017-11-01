@@ -4,6 +4,8 @@ The easiest way to refresh your React components with up-to-date syntax.
 
 The [Playground](https://react-reboot.now.sh/) is available to transform your react components online.
 
+This is for now a very basic and unflexible MVP, so don't be angry if it does not work well and come back later :) 
+
 Coming soon: Node API and CLI
 
 
