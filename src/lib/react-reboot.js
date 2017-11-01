@@ -3,7 +3,7 @@ const jscodeshiftCore = require("jscodeshift");
 const prettier = require("prettier");
 const eslint = require("eslint");
 const babel = require("babel-core");
-
+const babylon = require("babylon");
 
 require('babel-register')({
   babelrc: false,
@@ -18,7 +18,61 @@ require('babel-register')({
 });
 
 
-const jscodeshift = jscodeshiftCore.withParser(require('babel-core'));
+// Hacky backport of the babel.parse function that is expected by jscodeshift
+// https://github.com/babel/babel/blob/5.x/packages/babel/src/api/node.js
+babel.parse = (code, opts = {}) => {
+  opts.allowHashBang = true;
+  opts.sourceType = "module";
+  opts.ecmaVersion = Infinity;
+  opts.plugins = {
+    jsx: true,
+    flow: true,
+  };
+  opts.features = {
+    "es7.trailingFunctionCommas": true,
+    "es7.asyncFunctions": true,
+    "es7.decorators": true,
+    "es7.classProperties": true,
+    "es7.doExpressions": true,
+    "es7.exportExtensions": true,
+    "es7.functionBind": true,
+    "es7.functionSent": true,
+    "es7.objectRestSpread": true,
+    "es7.dynamicImport": true,
+  };
+  /*
+  opts.plugins =  [
+    "flow",
+    "jsx",
+    "asyncGenerators",
+    "classProperties",
+    "doExpressions",
+    "exportExtensions",
+    "functionBind",
+    "functionSent",
+    "objectRestSpread",
+    "dynamicImport"
+  ];
+  */
+  /*
+  opts.features = {};
+  for (var key in transform.pipeline.transformers) {
+    opts.features[key] = true;
+  }
+  */
+  const ast = babylon.parse(code, opts);
+  if (opts.onToken) {
+    opts.onToken.push(...ast.tokens);
+  }
+
+  if (opts.onComment) {
+    opts.onComment.push(...ast.comments);
+  }
+  return ast.program;
+};
+
+
+const jscodeshift = jscodeshiftCore.withParser(babel);
 
 
 const Api = {
@@ -158,9 +212,11 @@ const applyTransform = (transform, options, input,logger) => {
     Api,
     options
   );
-  // logger.push("Transform: input === output? => " + (input === output));
+  //console.log("single transform output: ",output);
+  logger.push("Transform: input === output? => " + (input === output));
   return output ? output : input;
 };
+
 
 const applyTransforms = (transforms,input,logger) => {
   const output = transforms.reduce(
@@ -177,7 +233,7 @@ const applyTransforms = (transforms,input,logger) => {
     input
   );
   logger.push("Codemod: input !== output? => " + (input !== output));
-  // logger.push("output",output);
+  logger.push("output",output);
   return output;
 };
 
@@ -191,7 +247,8 @@ const PrettierOptions = {
 
 const applyPrettier = (input,logger) => {
   try {
-    return prettier.format(input, PrettierOptions);
+    const output = prettier.format(input, PrettierOptions);
+    return output ? output : input;
   } catch (e) {
     console.error("Prettier failure",e);
     logger.push("Prettier failure: "+e.message);
@@ -317,7 +374,7 @@ const transform = (input) => {
   let output = input;
   output = applyTransforms(Transforms,output,logger);
   output = applyESLint(output,logger);
-  //output = applyBabel(output,logger);
+  output = applyBabel(output,logger);
   output = applyPrettier(output,logger);
   return {output,logger};
 };
