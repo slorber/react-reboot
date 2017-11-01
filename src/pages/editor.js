@@ -12,28 +12,40 @@ import PlaygroundDefaultInlineJS from "../fixtures/playgroundDefault.js";
 
 export default class Editor extends React.Component {
   static Throttle = 1000;
+  static DefaultOutput = "";
+  static DefaultLogger = [];
+
   state = {
     input: PlaygroundDefaultInlineJS,
     output: "",
-    logger: [],
+    logger: Editor.DefaultLogger,
   };
 
 
   componentDidMount() {
-    this.updateOutput(this.state.input);
+    this.updateOutputImmediate(this.state.input);
   };
   componentWillUnmount() {
     this.unmounted = true;
   }
 
-  updateOutput = value => {
+  updateOutputImmediate = value => {
     const transformPromise = getTransform(value);
-    this.setState({transformPromise});
+    this.setState({
+      transformPromise,
+      output: Editor.DefaultOutput,
+      logger: Editor.DefaultLogger,
+      error: undefined
+    });
     transformPromise.then(
       ({output, logger}) => {
         if (!this.unmounted && transformPromise === this.state.transformPromise) {
           console.debug("transform success", logger);
-          this.setState({output, logger, transformPromise: undefined});
+          this.setState({
+            output,
+            logger,
+            transformPromise: undefined,
+          });
         }
         else {
           console.debug("ignoring stale transform result", output, logger);
@@ -42,7 +54,12 @@ export default class Editor extends React.Component {
       e => {
         if (!this.unmounted && transformPromise === this.state.transformPromise) {
           console.error("transform error", e);
-          this.setState({transformPromise: undefined});
+          this.setState({
+            transformPromise: undefined,
+            output: Editor.DefaultOutput,
+            logger: Editor.DefaultLogger,
+            error: e
+          });
         }
         else {
           console.warn("ignored transform error", e);
@@ -52,16 +69,24 @@ export default class Editor extends React.Component {
     this.setState({input: value});
   };
 
-  updateOutputThrottled = debounce(value => this.updateOutput(value), Editor.Throttle);
+  updateOutputDebounced = debounce(
+    value => this.updateOutputImmediate(value),
+    Editor.Throttle,
+  );
 
 
   onChangeInput = value => {
-    this.setState({input: value});
-    // if we are ignoring the change due to debouncing
-    // we still want a spinner to immediately appear
-    // we know for sure the promise will be replaced on debounced call
-    this.setState({transformPromise: new Promise(() => {})});
-    this.updateOutputThrottled(value);
+    this.setState({
+      input: value,
+      output: Editor.DefaultOutput,
+      logger: Editor.DefaultLogger,
+      error: undefined,
+      // if we are ignoring the change due to debouncing
+      // we still want a spinner to immediately appear
+      // we know for sure the promise will be replaced on debounced call
+      transformPromise: new Promise(() => {}),
+    });
+    this.updateOutputDebounced(value);
   };
 
   onChangeOutput = value => {
@@ -69,6 +94,13 @@ export default class Editor extends React.Component {
   };
 
   render() {
+    const {
+      input,
+      output,
+      transformPromise,
+      logger,
+      error,
+    } = this.state;
     return (
       <Div
         flex={1}
@@ -78,13 +110,13 @@ export default class Editor extends React.Component {
       >
         <Window marginLeft={20} marginRight={10}>
           <CodeMirrorEditor
-            value={this.state.input}
+            value={input}
             onChange={this.onChangeInput}
           />
         </Window>
-        <Window marginLeft={10} marginRight={20} spinner={!!this.state.transformPromise}>
+        <Window marginLeft={10} marginRight={20} spinner={!!transformPromise} error={error}>
           <CodeMirrorEditor
-            value={this.state.output}
+            value={output}
             onChange={this.onChangeOutput}
           />
         </Window>
@@ -110,7 +142,7 @@ const FlexColumnGrow = {
   flex: 1,
 };
 
-const Window = ({children, spinner, ...rest}) => (
+const Window = ({children, spinner, error, ...rest}) => (
   <Div
     position="relative"
     background="#282a36"
@@ -136,6 +168,27 @@ const Window = ({children, spinner, ...rest}) => (
       </Div>
     </Div>
     {spinner && <SpinnerOverlay zIndex={10}/>}
+    {error && (
+      <Div
+        position="absolute"
+        width="100%"
+        height="100%"
+        backgroundColor="rgba(0, 0, 0, 0.5)"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Div
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Div padding={20} fontSize={30} color={"red"}>Error</Div>
+          <Div padding={20} fontSize={20} color={"red"}>{error.message}</Div>
+        </Div>
+      </Div>
+    )}
   </Div>
 );
 
@@ -180,10 +233,13 @@ class CodeMirrorEditor extends React.PureComponent {
 function checkStatus(response) {
   if (response.status >= 200 && response.status < 300) {
     return response
-  } else {
-    const error = new Error(response.statusText);
-    error.response = response;
-    throw error;
+  }
+  else {
+    return response.text().then(text => {
+      const error = new Error(text);
+      error.response = response;
+      throw error;
+    });
   }
 }
 function parseJSON(response) {

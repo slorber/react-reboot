@@ -370,6 +370,11 @@ const applyBabel = (input,logger) => {
 
 
 const transform = (input) => {
+  try {
+    babel.parse(input);
+  } catch(e) {
+    throw new Error("Unable to parse code with Babel. Reason=" + e.message);
+  }
   const logger = [];
   let output = input;
   output = applyTransforms(Transforms,output,logger);

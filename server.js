@@ -31,8 +31,13 @@ app.prepare()
         res.status(400).send('no input');
       }
       else {
-        const {output,logger} = ReactReboot.transform(input);
-        res.set('Content-Type', 'application/json').status(200).send({output,logger});
+        try {
+          const {output,logger} = ReactReboot.transform(input);
+          res.set('Content-Type', 'application/json').status(200).send({output,logger});
+        }
+        catch(e) {
+          res.status(400).send(e.message);
+        }
       }
     });
 
