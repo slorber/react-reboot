@@ -60,7 +60,7 @@ export default class Editor extends React.Component {
     // if we are ignoring the change due to debouncing
     // we still want a spinner to immediately appear
     // we know for sure the promise will be replaced on debounced call
-    this.setState({transformPromise: new Promise()});
+    this.setState({transformPromise: new Promise(() => {})});
     this.updateOutputThrottled(value);
   };
 
