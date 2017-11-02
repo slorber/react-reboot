@@ -1,5 +1,7 @@
 import React from "react";
 import Document, {Head, Main as NextMain, NextScript} from 'next/document'
+import flush from 'styled-jsx/server'
+
 import Link from 'next/link'
 
 import {renderStatic} from 'glamor/server'
@@ -15,7 +17,11 @@ export default class MyDocument extends Document {
   static async getInitialProps({renderPage}) {
     const page = renderPage();
     const styles = renderStatic(() => page.html);
-    return {...page, ...styles};
+    return {
+      ...page,
+      ...styles,
+      jsxStyleCss: flush(),
+    };
   }
 
   constructor(props) {
@@ -60,6 +66,7 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.26.0/codemirror.min.css"/>
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/theme/dracula.min.css"/>
           <style dangerouslySetInnerHTML={{__html: this.props.css}}/>
+          {this.props.jsxStyleCss}
         </Head>
         <body>
           <ForkMe/>

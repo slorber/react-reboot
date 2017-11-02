@@ -294,7 +294,7 @@ class CodeMirrorEditor extends React.PureComponent {
   };
   render() {
     if (!this.state.show) {
-      return null;
+      return <SpinnerOverlay zIndex={10}/>;
     }
     return (
         <CodeMirror

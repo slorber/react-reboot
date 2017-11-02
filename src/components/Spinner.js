@@ -8,7 +8,7 @@ const Spinner = () => (
     <div className="bounce1"/>
     <div className="bounce2"/>
     <div className="bounce3"/>
-    <style global jsx>
+    <style jsx>
       {`
         .spinner {
           margin: 100px auto 0;
@@ -60,6 +60,8 @@ export default Spinner;
 export const SpinnerOverlay = (props) => (
   <Div
     position="absolute"
+    top={0}
+    right={0}
     width="100%"
     height="100%"
     backgroundColor="rgba(0, 0, 0, 0.5)"
