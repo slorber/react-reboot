@@ -14,3 +14,11 @@ export const ScreenshotUrl = `${BaseURL}/static/screenshot.png`;
 
 export const PageEditor = "/";
 export const PageAbout = "/about";
+
+
+export const MediaBreakpoint = 800;
+
+export const MediaQueries = {
+  small: `@media only screen and (max-width: ${MediaBreakpoint}px)`,
+  large: `@media only screen and (min-width: ${MediaBreakpoint}px)`,
+};

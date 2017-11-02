@@ -8,6 +8,8 @@ import {SpinnerOverlay} from "components/Spinner";
 
 
 import PlaygroundDefaultInlineJS from "../fixtures/playgroundDefault.js";
+import {MediaQueries} from "constants";
+
 
 
 export default class Editor extends React.Component {
@@ -103,18 +105,42 @@ export default class Editor extends React.Component {
     } = this.state;
     return (
       <Div
-        flex={1}
-        width="100%"
-        display="flex"
-        flexDirection="row"
+        css={{
+          padding: "0 20px",
+          [MediaQueries.large]: {
+            flex: 1,
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+          },
+          [MediaQueries.small]: {
+            width: '100%',
+          },
+        }}
       >
-        <Window marginLeft={20} marginRight={10}>
+        <Window
+          title="before"
+          css={{
+            [MediaQueries.large]: {
+              marginRight: 20,
+            }
+          }}
+        >
           <CodeMirrorEditor
             value={input}
             onChange={this.onChangeInput}
           />
         </Window>
-        <Window marginLeft={10} marginRight={20} spinner={!!transformPromise} error={error}>
+        <Window
+          title="after"
+          css={{
+            [MediaQueries.small]: {
+              marginTop: 20,
+            },
+          }}
+          spinner={!!transformPromise}
+          error={error}
+        >
           <CodeMirrorEditor
             value={output}
             onChange={this.onChangeOutput}
@@ -142,7 +168,7 @@ const FlexColumnGrow = {
   flex: 1,
 };
 
-const Window = ({children, spinner, error, ...rest}) => (
+const Window = ({children, title, spinner, error, ...rest}) => (
   <Div
     position="relative"
     background="#282a36"
@@ -154,8 +180,27 @@ const Window = ({children, spinner, error, ...rest}) => (
       padding={5}
       {...FlexColumnGrow}
     >
-      <Div padding={5} flex={0}>
-        <WindowControls/>
+      <Div
+        padding={5}
+        flex={0}
+      >
+        <Div
+          display="flex"
+          flexDirection="row"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Div flex={0}>
+          <WindowControls/>
+          </Div>
+          <Div
+            flex={1}
+            marginBottom={3}
+            marginLeft={10}
+          >
+            {title}
+          </Div>
+        </Div>
       </Div>
       <Div
         css={{
