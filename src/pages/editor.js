@@ -168,13 +168,21 @@ const FlexColumnGrow = {
   flex: 1,
 };
 
-const Window = ({children, title, spinner, error, ...rest}) => (
+const Window = ({children, title, spinner, error, css = {}, ...rest}) => (
   <Div
     position="relative"
     background="#282a36"
     borderRadius={5}
     {...rest}
     {...FlexColumnGrow}
+    css={{
+      ...css,
+      [MediaQueries.small]: {
+        ...css[MediaQueries.small],
+        height: "38vh",
+        minHeight: 250,
+      },
+    }}
   >
     <Div
       padding={5}
