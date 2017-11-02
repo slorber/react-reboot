@@ -24,6 +24,7 @@ babel.parse = (code, opts = {}) => {
   opts.allowHashBang = true;
   opts.sourceType = "module";
   opts.ecmaVersion = Infinity;
+  /*
   opts.plugins = {
     jsx: true,
     flow: true,
@@ -40,8 +41,10 @@ babel.parse = (code, opts = {}) => {
     "es7.objectRestSpread": true,
     "es7.dynamicImport": true,
   };
-  /*
+  */
+
   opts.plugins =  [
+    "estree",
     "flow",
     "jsx",
     "asyncGenerators",
@@ -53,7 +56,7 @@ babel.parse = (code, opts = {}) => {
     "objectRestSpread",
     "dynamicImport"
   ];
-  */
+
   /*
   opts.features = {};
   for (var key in transform.pipeline.transformers) {
