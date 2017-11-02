@@ -191,7 +191,7 @@ const Window = ({children, title, spinner, error, ...rest}) => (
           justifyContent="center"
         >
           <Div flex={0}>
-          <WindowControls/>
+            <WindowControls/>
           </Div>
           <Div
             flex={1}

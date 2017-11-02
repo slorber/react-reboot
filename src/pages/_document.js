@@ -1,11 +1,15 @@
-import Document, {Head, Main, NextScript} from 'next/document'
+import React from "react";
+import Document, {Head, Main as NextMain, NextScript} from 'next/document'
 import Link from 'next/link'
 
 import {renderStatic} from 'glamor/server'
-import {A, Div, Footer, Header, Img} from "glamorous";
+import {A, Div, Footer, Main, Header, Img} from "glamorous";
 import 'babel-polyfill';
 import 'whatwg-fetch';
-import {AppName, AppTitle, AuthorTwitterHandle, BaseURL, GithubUrl, PageAbout, ScreenshotUrl} from "constants";
+import {
+  AppName, AppTagline, AppTitle, AuthorTwitterHandle, BaseURL, GithubUrl, LogoUrl, MediaQueries, PageAbout,
+  ScreenshotUrl
+} from "constants";
 
 export default class MyDocument extends Document {
   static async getInitialProps({renderPage}) {
@@ -69,7 +73,9 @@ export default class MyDocument extends Document {
 
 
 const ForkMe = () => (
-  <A href={GithubUrl}>
+  <A
+    href={GithubUrl}
+  >
     <Img
       position="absolute"
       zIndex={11}
@@ -79,6 +85,18 @@ const ForkMe = () => (
       src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67"
       alt="Fork me on GitHub"
       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"
+      cursor="pointer"
+      css={{
+        transition: "all 0.2s ease-out",
+        transform: "scale(1.0)",
+        "&:hover": {
+          transform: "scale(1.04)",
+        },
+        [MediaQueries.small]: {
+          width: 120,
+          height: 120,
+        },
+      }}
     />
   </A>
 );
@@ -101,10 +119,11 @@ const AppTemplate = () => (
     display="flex"
     flexDirection="column"
   >
-    <Div flex={0}>
-      <AppHeader/>
-    </Div>
-    <Div
+    <Header flex={0}>
+      <AppHeaderSmall/>
+      <AppHeaderLarge/>
+    </Header>
+    <Main
       css={{
         ...BaseCss,
         "& .next-main": BaseCss,
@@ -112,56 +131,108 @@ const AppTemplate = () => (
         "& [data-reactroot]": BaseCss,
       }}
     >
-     <Main className="next-main"/>
-    </Div>
-    <Div flex={0}>
+     <NextMain className="next-main"/>
+    </Main>
+    <Footer flex={0}>
       <AppFooter/>
-    </Div>
+    </Footer>
   </Div>
 );
 
-const AppHeader = () => (
-  <Header
-    display="flex"
+const AppHeaderLarge = () => (
+  <Div
+    css={{
+      display: "none",
+      [MediaQueries.large]: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: "0 20px",
+      },
+    }}
   >
     <Div
-      padding={20}
+      flex={0}
+      paddingLeft={10}
+    >
+      <AppLogo size={100}/>
+    </Div>
+    <Div
       flex={1}
+      padding={20}
     >
       <Div
-        padding={5}
-        fontSize={28}
+        display="flex"
+        alignItems="baseline"
       >
-        {AppTitle}
+        <Div fontSize={26} whiteSpace="nowrap">{AppName}</Div>
+        <Div fontSize={26} margin="0 10px">-</Div>
+        <Div fontSize={20}>{AppTagline}</Div>
       </Div>
       <Div
-        padding={5}
+        marginTop={5}
       >
-        <Div fontSize={16}>Refresh your react components with up-to-date syntax by simple copy-paste, cli or node API.</Div>
-        <Div fontSize={12} marginTop={5}>This runs JsCodeShift, Babel, ESLint and Prettier with an opiniated config in a single tool.</Div>
+        <Div fontSize={14}>Refresh your react components with up-to-date syntax by simple copy-paste, cli or node API.</Div>
+        <Div fontSize={14} marginTop={5}>This runs JsCodeShift, Babel, ESLint and Prettier with an opiniated config in a single tool.</Div>
       </Div>
     </Div>
     <Div
       flex={0}
-      marginRight={150}
+      marginRight={80}
       display="flex"
       alignItems="center"
       justifyContent="center"
     >
       {/*<Link href={PageAbout}>About</Link>*/}
     </Div>
-  </Header>
+  </Div>
+);
+
+const AppHeaderSmall = () => (
+  <Div
+    css={{
+      display: "none",
+      [MediaQueries.small]: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        padding: "0 20px",
+      },
+    }}
+  >
+    <Div flex={0}>
+      <AppLogo size={80}/>
+    </Div>
+    <Div
+      flex={1}
+      marginRight={50}
+    >
+      <Div
+        fontSize={26}
+      >
+        {AppName}
+      </Div>
+      <Div fontSize={14}>
+        {AppTagline}
+      </Div>
+    </Div>
+  </Div>
+);
+
+
+const AppLogo = ({size}) => (
+  <Img src={LogoUrl} width={size} height={size}/>
 );
 
 const AppFooter = () => (
-  <Footer
+  <Div
     padding={20}
     fontSize={12}
   >
     <Div>
       Made by <A href="https://twitter.com/sebastienlorber" color="cyan">{"@" + AuthorTwitterHandle}</A>
     </Div>
-  </Footer>
+  </Div>
 );
 
 
