@@ -8,17 +8,43 @@ import {SpinnerOverlay} from "components/Spinner";
 
 
 import PlaygroundDefaultInlineJS from "../fixtures/playgroundDefault.js";
+import PlaygroundDefaultMobileInlineJS from "../fixtures/playgroundDefaultMobile.js";
 import {MediaQueries} from "constants";
 
 
+const isProbablyMobile = userAgent => {
+  return typeof userAgent === 'undefined'
+    || userAgent.match(/Android/i)
+    || userAgent.match(/webOS/i)
+    || userAgent.match(/iPhone/i)
+    || userAgent.match(/iPad/i)
+    || userAgent.match(/iPod/i)
+    || userAgent.match(/BlackBerry/i)
+    || userAgent.match(/Windows Phone/i);
+};
+
+// For mobile we want a simplified input to showcase the tool because user has a small screen to view large examples
+// We have to infer mobile usage from user agent unreliably but it's good enough
+const getInitialInput = (req) => {
+  const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
+  return isProbablyMobile(userAgent) ?
+    PlaygroundDefaultMobileInlineJS :
+    PlaygroundDefaultInlineJS;
+};
 
 export default class Editor extends React.Component {
+
+  static async getInitialProps({ req }) {
+    const initialInput = getInitialInput(req);
+    return { initialInput };
+  }
+
   static Throttle = 1000;
   static DefaultOutput = "";
   static DefaultLogger = [];
 
   state = {
-    input: PlaygroundDefaultInlineJS,
+    input: this.props.initialInput,
     output: "",
     logger: Editor.DefaultLogger,
   };
