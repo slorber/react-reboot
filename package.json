@@ -60,7 +60,7 @@
     "now": "^8.3.11",
     "prettier": "^1.7.4",
     "react": "^16.0.0",
-    "react-codemirror2-mobile": "^3.0.5",
+    "react-codemirror2": "^3.0.6",
     "react-dom": "^16.0.0",
     "whatwg-fetch": "^2.0.3"
   }

@@ -4,7 +4,7 @@
 // For SSR, CodeMirror will throw an error, so return a div instead
 let CodeMirror = 'div'
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
-  CodeMirror = require('react-codemirror2-mobile').Controlled;
+  CodeMirror = require('react-codemirror2').Controlled;
   require('codemirror/mode/javascript/javascript');
   require('codemirror/mode/xml/xml');
   require('codemirror/mode/jsx/jsx');

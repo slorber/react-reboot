@@ -4639,9 +4639,9 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-codemirror2-mobile@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/react-codemirror2-mobile/-/react-codemirror2-mobile-3.0.5.tgz#ecbeb2131ff9d009754cf6f02cdca7d8ec60fc7e"
+react-codemirror2@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/react-codemirror2/-/react-codemirror2-3.0.6.tgz#e986afd75c31a1b9d0b64c737b966f602be7923a"
 
 react-deep-force-update@^2.1.1:
   version "2.1.1"
