@@ -8,19 +8,19 @@
   "commit": true,
   "contributors": [
     {
-      "login": "sutter",
-      "name": "Sutterlity Laurent",
-      "avatar_url": "https://avatars1.githubusercontent.com/u/709456?v=4",
-      "profile": "http://www.sutterlity.fr",
+      "login": "slorber",
+      "name": "Sébastien Lorber",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/749374?v=4",
+      "profile": "https://github.com/slorber",
       "contributions": [
         "code"
       ]
     },
     {
-      "login": "slorber",
-      "name": "Sébastien Lorber",
-      "avatar_url": "https://avatars0.githubusercontent.com/u/749374?v=4",
-      "profile": "https://github.com/slorber",
+      "login": "sutter",
+      "name": "Sutterlity Laurent",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/709456?v=4",
+      "profile": "http://www.sutterlity.fr",
       "contributions": [
         "code"
       ]

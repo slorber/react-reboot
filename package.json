@@ -26,6 +26,8 @@
     "start": "NODE_ENV=production node server.js",
     "deploy": "now && now alias",
     "postinstall": "npm run download-codemods-if-needed",
+    "add-contributor": "all-contributors add",
+    "generate-contributors": "all-contributors generate",
     "download-codemods-if-needed": "[[ -d codemods ]] || npm run download-codemods",
     "download-codemods": "npm run download-react-codemod & npm run download-js-codemod",
     "download-react-codemod": "mkdir -p codemods && curl -L -o ./codemods/react-codemod.zip 'https://github.com/reactjs/react-codemod/archive/master.zip' && unzip ./codemods/react-codemod.zip -d ./codemods && mv ./codemods/react-codemod-master ./codemods/react-codemod",
