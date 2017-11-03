@@ -145,14 +145,13 @@ Thanks to Zeit for sponsoring/hosting the project: it runs on NextJs and Now.
 
 # Contributors
 
-Thanks to all project contributors.
+Thanks to all project contributors ([all-contributors](https://github.com/kentcdodds/all-contributors) specification)
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 | [<img src="https://avatars0.githubusercontent.com/u/749374?v=4" width="100px;"/><br /><sub><b>Sébastien Lorber</b></sub>](https://github.com/slorber)<br />[💻](https://github.com/slorber/react-reboot/commits?author=slorber "Code") | [<img src="https://avatars1.githubusercontent.com/u/709456?v=4" width="100px;"/><br /><sub><b>Sutterlity Laurent</b></sub>](http://www.sutterlity.fr)<br />[💻](https://github.com/slorber/react-reboot/commits?author=sutter "Code") |
 | :---: | :---: |
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-[all-contributors](https://github.com/kentcdodds/all-contributors) specification. 
 
 Contributions of any kind welcome!
 
