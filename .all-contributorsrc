@@ -1,0 +1,20 @@
+{
+  "projectName": "react-reboot",
+  "projectOwner": "slorber",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "sutter",
+      "name": "Sutterlity Laurent",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/709456?v=4",
+      "profile": "http://www.sutterlity.fr",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 # react-reboot
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
 
 The easiest way to refresh your React components with up-to-date syntax.
 
@@ -142,3 +143,14 @@ yarn dev
 Thanks to Zeit for sponsoring/hosting the project: it runs on NextJs and Now.
 
 Thanks to Babel, Jscodeshift, ESlint, Prettier, and [Carbon](https://github.com/dawnlabs/carbon) for some design/layout/code inspiration.
+
+## Contributors
+
+Thanks goes to these wonderful people ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+| [<img src="https://avatars1.githubusercontent.com/u/709456?v=4" width="100px;"/><br /><sub><b>Sutterlity Laurent</b></sub>](http://www.sutterlity.fr)<br />[💻](https://github.com/slorber/react-reboot/commits?author=sutter "Code") |
+| :---: |
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/kentcdodds/all-contributors) specification. Contributions of any kind welcome!
