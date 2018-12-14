@@ -156,3 +156,8 @@ Thanks to all project contributors ([all-contributors](https://github.com/kentcd
 Contributions of any kind welcome!
 
 Thanks to Babel, Jscodeshift, ESlint, Prettier, and [Carbon](https://github.com/dawnlabs/carbon) for some design/layout/code inspiration.
+
+# Hire a freelance expert
+
+Looking for a React/ReactNative freelance expert with more than 5 years production experience?
+Contact me from my [website](https://sebastienlorber.com/) or with [Twitter](https://twitter.com/sebastienlorber).
