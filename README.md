@@ -1,9 +1,15 @@
 # react-reboot
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
+# Not maintained
+
+The online playground is put offline due to low project traction and paid hosting. Many people have already migrated to modern ES6 syntax so this is not so useful anymore.
+
+# Intro
+
 The easiest way to refresh your React components with up-to-date syntax.
 
-The [Playground](https://react-reboot.now.sh/) is available to transform your react components online.
+The [Playground](https://react-reboot.now.sh/) is available to transform your react components online. 
 
 This is for now a very basic and unflexible MVP, so don't be angry if it does not work well and come back later :) 
 
@@ -136,11 +142,6 @@ Works with these versions:
 yarn install
 yarn dev
 ```
-
-# Sponsors
-
-<img src="https://avatars1.githubusercontent.com/u/14985020?s=200&v=4" width="50"/>
-Thanks to Zeit for sponsoring/hosting the project: it runs on NextJs and Now.
 
 
 # Contributors
